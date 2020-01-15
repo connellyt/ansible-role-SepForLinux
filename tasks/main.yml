@@ -1,0 +1,25 @@
+---
+- name: Check to see SEP if it's installed
+  block:
+    - name: Check SEP Version
+      command: /opt/Symantec/symantec_antivirus/sav info -p
+      register: sep_version
+
+    - debug:
+        msg: "{{ sep_version }} is installed"
+
+    - name: Nothing to do
+      debug:
+        msg: "Nothing to do.  Current version is installed."
+      when: "sep_target in sep_version.stdout"
+
+    - name: Upgrade SEP
+      include_tasks: upgradeSep.yml
+      when: "sep_target not in sep_version.stdout"
+
+  rescue:
+    - debug:
+        msg:  "SEP for linux doesn't appear to be installed. Installing..."
+    
+    - name: Install SEP
+      include_tasks: installSep.yml

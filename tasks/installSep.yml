@@ -1,0 +1,31 @@
+---
+- name: Ensure SymantecEndpointProtection Directory exists
+  file:
+    path: "{{ sep_dest }}"
+    state: directory
+
+- name: Copy SEP to Host
+  unarchive:
+    src: "{{ sep_src  }}"
+    dest: "{{ sep_dest }}"
+
+- name: Make install.sh executable
+  file:
+    path: "{{ sep_dest }}/install.sh"
+    mode: u+x
+
+- name: Install dependencies
+  yum:
+    name: "{{ dependencies }}"
+    state: latest
+
+- name: Install SEP for Linux
+  command: "{{ sep_dest }}/install.sh -i"
+
+- name: Clean up install directory
+  file:
+    path: "{{ sep_dest }}"
+    state: absent
+
+- name: Update SEP for Linux Shared Libraries
+  import_tasks: SepUpdateSharedLibraries.yml

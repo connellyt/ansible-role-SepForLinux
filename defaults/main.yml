@@ -1,0 +1,4 @@
+---
+sep_target: "<versionNumber>"
+sep_src: /path/to/SymantecEndpointProtection.zip
+sep_dest: /remote/path/to/SymantecEndpointProtection

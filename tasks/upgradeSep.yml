@@ -1,0 +1,31 @@
+---
+- name: Stop SEP services
+  service:
+    name: symcfgd
+    state:  stopped
+
+- name: Ensure SymantecEndpointProtection Directory Exists
+  file:
+    path: "{{ sep_dest }}"
+    state: directory
+
+- name: Copy SEP to Host
+  unarchive:
+    src: "{{ sep_src  }}"
+    dest: "{{ sep_dest }}"
+
+- name: Make install.sh executable
+  file:
+    path: "{{ sep_dest }}/install.sh"
+    mode: u+x
+
+- name: Install SEP for Linux
+  script:  "{{ sep_dest }}/install.sh -i"
+
+- name: Clean up tmp directory
+  file:
+    path: "{{ sep_dest }}"
+    state: absent
+
+- name: Update SEP for Linux Shared Libraries
+  import_tasks: SepUpdateSharedLibraries.yml 

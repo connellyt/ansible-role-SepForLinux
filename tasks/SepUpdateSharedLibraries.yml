@@ -1,0 +1,27 @@
+---
+# Endpoint Protection for Linux shows an error while loading shared libraries
+# TECH234812
+# Last Updated September 04, 2019
+# Symantec Endpoint Protection (SEP) for Linux displays "error while loading shared libraries" in system logs or at the command
+# -line. The client GUI displays Auto-Protect: Disabled and Scan: Unknown status.
+# https://support.symantec.com/us/en/article.TECH234812.html
+#
+# You may need to run ldconfig and then reboot if you still see SELinux entries for /opt/Symantec/symantec_antivirus/rtvscand.
+- name: Cache SEP for Linux shared libraries in /etc/ld.so.conf.d/symav.conf
+  lineinfile:
+    path: /etc/ld.so.conf.d/symav.conf
+    line: /opt/Symantec/symantec_antivirus
+    state: present       
+
+- name: Update link libraries with ldconfig
+  command: /sbin/ldconfig
+
+- name: Stop SEP
+  service:
+    name: symcfgd
+    state: stopped
+
+- name: Start SEP
+  service:
+    name: smcd
+    state: started
