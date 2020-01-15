@@ -8,22 +8,20 @@ Requires a valid license from Symantec, as well as the software to install.
 
 ## Role Variables
 
-sep_target: This is the version of SEP you want to install (e.g., 14.2.5323.2000)
-sep_src: Location where you can pull installation package (e.g., /opt/software/SymantecEndpointProtection.zip)
-sep_dest: Location from where you will run the install script (e.g., /home/user/SymantecEndpointProtection)
+sep_target: This is the version of SEP you want to install (e.g., 14.2.5323.2000)<br />
+sep_src: Location where you can pull installation package (e.g., /opt/software/SymantecEndpointProtection.zip) <br />
+sep_dest: Location from where you will run the install script (e.g., /home/user/SymantecEndpointProtection)<br />
 
 ## Dependencies
 
 None.
 
 ## Example Playbook
-
----
-- name: Test SEP Role
-  hosts: linux_servers
-  roles:
-    - "connellyt.SepForLinux"
-
+```
+ - hosts: linux_servers
+   roles:
+     - "connellyt.SepForLinux"
+```
 ## License
 
 BSD
