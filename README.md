@@ -1,6 +1,6 @@
 # Ansible Role: SepForLinux
 
-Installs or upgrades Symantec Endpoint Protection for Linux
+Installs or upgrades Symantec Endpoint Protection for Linux.
 
 ## Requirements
 
