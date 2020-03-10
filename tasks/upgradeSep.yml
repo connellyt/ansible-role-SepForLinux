@@ -20,7 +20,7 @@
     mode: u+x
 
 - name: Install SEP for Linux
-  script:  "{{ sep_dest }}/install.sh -i"
+  command:  "{{ sep_dest }}/install.sh -i"
 
 - name: Clean up tmp directory
   file:
